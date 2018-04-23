@@ -8,13 +8,13 @@
 # Author: Carlos Reyes Guerola
 # date: 21/04/2017
 # last update: 10/04/2018
-# Version: 1.5.7
+# Version: 1.5.8
 #---------------------------------------------------------------------------------
 __author__ = "Carlos Reyes Guerola"
 __copyright__ = "Copyright 2018, Bornay aerogeneradores S.L.U"
 __credits__ = ["CRG@18"]
 __license__ = "Bornay aerogeneradores S.L.U"
-__version__ = "1.5.7"
+__version__ = "1.5.8"
 __maintainer__ = __author__
 __email__ = "bornay@bornay.com"
 
@@ -34,7 +34,7 @@ from pymodbus.client.sync import ModbusSerialClient as ModbusClient# initialize 
 import logging
 logging.basicConfig()
 log = logging.getLogger()
-log.setLevel(logging.DEBUG)
+#log.setLevel(logging.DEBUG) #Uncomment for debug
 
 
 # importing dbus complements
@@ -326,8 +326,8 @@ if __name__ == '__main__':
 				sys.exit("Connection lost")
 		else:
 			s.read_result = s.read_registers(5000,31) #read modbus data
-			log.error("Exit %s with %d errors" % (s.read_result, s.connect_error))
-			if s.read_result == "error":
+			log.debug("Exit %s with %d errors" % (s.read_result, s.connect_error))
+	server		if s.read_result == "error":
 				s.connect_error = s.connect_error + 1
 				if s.connect_error == 2: #if we have a lot of errors, stops the script
 					s.connect_error = 0
