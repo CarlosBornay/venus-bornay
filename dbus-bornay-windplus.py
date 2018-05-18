@@ -8,7 +8,7 @@
 # Author: Carlos Reyes Guerola
 # date: 21/04/2017
 # last update: 10/04/2018
-# Version: 1.5.8
+# Version: 1.5.7
 #---------------------------------------------------------------------------------
 __author__ = "Carlos Reyes Guerola"
 __copyright__ = "Copyright 2018, Bornay aerogeneradores S.L.U"
@@ -32,9 +32,7 @@ from pymodbus.client.sync import ModbusSerialClient as ModbusClient# initialize 
 
 #logging library config
 import logging
-logging.basicConfig()
 log = logging.getLogger()
-#log.setLevel(logging.DEBUG) #Uncomment for debug
 
 
 # importing dbus complements
@@ -155,9 +153,9 @@ class VBus():
 		log.info(self.args)
 		# Init logging
 		logging.basicConfig(level=(logging.DEBUG if self.args.debug else logging.INFO))
-		logging.info(__file__ + " is starting up")
+		log.info(__file__ + " is starting up")
 		logLevel = {0: 'NOTSET', 10: 'DEBUG', 20: 'INFO', 30: 'WARNING', 40: 'ERROR'}
-		logging.info('Loglevel set to ' + logLevel[logging.getLogger().getEffectiveLevel()])
+		log.info('Loglevel set to ' + logLevel[log.getEffectiveLevel()])
 
 	#-----------------------------------------------------------------------------
 	# Initializes the vbus protocol.
@@ -186,7 +184,7 @@ class VBus():
 	#-----------------------------------------------------------------------------
 	def __mandatory__(self):
 		try:
-			logging.info("using device instance 0")
+			log.info("using device instance 0")
 
 			# Create the management objects, as specified in the ccgx dbus-api document
 			self.dbusservice.add_path('/Management/ProcessName', __file__)
@@ -327,7 +325,7 @@ if __name__ == '__main__':
 		else:
 			s.read_result = s.read_registers(5000,31) #read modbus data
 			log.debug("Exit %s with %d errors" % (s.read_result, s.connect_error))
-	server		if s.read_result == "error":
+			if s.read_result == "error":
 				s.connect_error = s.connect_error + 1
 				if s.connect_error == 2: #if we have a lot of errors, stops the script
 					s.connect_error = 0
